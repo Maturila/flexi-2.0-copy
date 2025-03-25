@@ -82,7 +82,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settingProfile"
+        name="settings"
         options={{
           title: 'Settings',
           tabBarIcon: ({ color }) => (
@@ -90,6 +90,16 @@ export default function TabLayout() {
           ),
         }}
       />
-      </Tabs>
+      <Tabs.Screen
+        name="paymentHistory"
+        options={{
+          title: 'Payment History',
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="money" size={24} color={color} />
+          ),
+          tabBarButton: () => null, // This hides the tab but keeps the screen accessible
+        }}
+      />
+    </Tabs>
   );
 }

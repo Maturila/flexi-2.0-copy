@@ -82,7 +82,7 @@ const EmployeeDashboard: React.FC = () => {
         <DashboardButton 
           icon="money-bill-wave" 
           text="Payment History" 
-          onPress={() => router.push('/paymentHistory')}
+          onPress={() => router.push('/(tabs)/paymentHistory')}
         />
       </View>
 
