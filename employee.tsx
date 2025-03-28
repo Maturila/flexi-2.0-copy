@@ -57,7 +57,7 @@ const EmployeeDashboard: React.FC = () => {
           <SuitcaseIcon />
           <Text style={styles.title}>Flexi</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/profile')}>
           <FontAwesome5 name="user-circle" size={24} color="#000" />
         </TouchableOpacity>
       </View>

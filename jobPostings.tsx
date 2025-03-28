@@ -1,113 +1,194 @@
 import React from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const jobs = [
-  { id: '1', title: 'Driver', location: 'ECR, Chennai', date: 'Oct 5, 2023' },
-  { id: '2', title: 'Petrol Station worker', location: 'Anna Nagar, Chennai', date: 'Oct 3, 2023' },
-  { id: '3', title: 'Cashier', location: 'Guindy, Chennai', date: 'Oct 1, 2023' },
+  { 
+    id: '1', 
+    title: 'Driver', 
+    location: 'ECR, Chennai', 
+    date: 'Oct 5, 2023',
+    salary: '₹18,000 - ₹25,000',
+    type: 'Full-time'
+  },
+  { 
+    id: '2', 
+    title: 'Petrol Station worker', 
+    location: 'Anna Nagar, Chennai', 
+    date: 'Oct 3, 2023',
+    salary: '₹15,000 - ₹20,000',
+    type: 'Part-time'
+  },
+  { 
+    id: '3', 
+    title: 'Cashier', 
+    location: 'Guindy, Chennai', 
+    date: 'Oct 1, 2023',
+    salary: '₹12,000 - ₹15,000',
+    type: 'Full-time'
+  },
 ];
 
-const JobPostingScreen = () => {
+export default function JobPostingScreen() {
+  const router = useRouter();
+
+  const renderJobCard = ({ item }) => (
+    <View style={styles.jobCard}>
+      <Text style={styles.jobTitle}>{item.title}</Text>
+      <View style={styles.jobInfo}>
+        <View style={styles.infoItem}>
+          <FontAwesome5 name="map-marker-alt" size={14} color="#6b7280" />
+          <Text style={styles.jobDetails}>{item.location}</Text>
+        </View>
+        <View style={styles.infoItem}>
+          <FontAwesome5 name="clock" size={14} color="#6b7280" />
+          <Text style={styles.jobDetails}>{item.type}</Text>
+        </View>
+        <View style={styles.infoItem}>
+          <FontAwesome5 name="money-bill-wave" size={14} color="#6b7280" />
+          <Text style={styles.jobDetails}>{item.salary}</Text>
+        </View>
+      </View>
+      <View style={styles.cardFooter}>
+        <Text style={styles.postedDate}>Posted: {item.date}</Text>
+        <TouchableOpacity 
+          style={styles.viewDetailsButton}
+          onPress={() => router.push('/jobDetails')}
+        >
+          <Text style={styles.viewDetailsText}>View Details</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/images/JobPostingScreen_Image.png')} style={styles.headerImage}>
-        <View style={styles.headerOverlay}>
-          <Text style={styles.headerText}>Hello there! Find flexi jobs</Text>
-        </View>
-      </ImageBackground>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <FontAwesome5 name="arrow-left" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Job Listings</Text>
+        <TouchableOpacity onPress={() => router.push('/profile')}>
+          <FontAwesome5 name="user-circle" size={24} color="#000" />
+        </TouchableOpacity>
+      </View>
       
       <View style={styles.searchContainer}>
-        <TextInput style={styles.searchInput} placeholder="Search for jobs..." placeholderTextColor="#777" />
+        <View style={styles.searchInputContainer}>
+          <FontAwesome5 name="search" size={16} color="#6b7280" style={styles.searchIcon} />
+          <TextInput 
+            style={styles.searchInput} 
+            placeholder="Search for jobs..." 
+            placeholderTextColor="#777" 
+          />
+        </View>
       </View>
       
       <FlatList
         data={jobs}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.jobCard}>
-            <Text style={styles.jobTitle}>{item.title}</Text>
-            <Text style={styles.jobDetails}>Location: {item.location} - Posted on: {item.date}</Text>
-            <TouchableOpacity style={styles.applyButton}>
-              <Text style={styles.applyText}>Apply</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        renderItem={renderJobCard}
+        contentContainerStyle={styles.listContainer}
       />
-
-      <View style={styles.footerNav}>
-        <Ionicons name="home" size={24} color="#004D61" />
-        <Ionicons name="chatbubble-ellipses" size={24} color="#004D61" />
-        <Ionicons name="calendar" size={24} color="#004D61" />
-        <Ionicons name="notifications" size={24} color="#004D61" />
-      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
   },
-  headerImage: {
-    width: '100%',
-    height: 180,
-    justifyContent: 'center',
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingTop: 40,
+    paddingBottom: 10,
+    elevation: 2,
   },
-  headerOverlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-  },
-  headerText: {
-    color: 'white',
-    fontSize: 22,
+  headerTitle: {
+    fontSize: 20,
     fontWeight: 'bold',
+    color: '#111827',
   },
   searchContainer: {
-    padding: 10,
+    padding: 15,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  searchInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f3f4f6',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+  },
+  searchIcon: {
+    marginRight: 8,
   },
   searchInput: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    paddingHorizontal: 15,
+    flex: 1,
     height: 40,
-    elevation: 2,
+    fontSize: 16,
+    color: '#111827',
+  },
+  listContainer: {
+    padding: 15,
   },
   jobCard: {
     backgroundColor: 'white',
-    margin: 10,
-    padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
     elevation: 2,
   },
   jobTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 8,
+  },
+  jobInfo: {
+    marginBottom: 12,
+  },
+  infoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
   },
   jobDetails: {
-    color: '#555',
-    marginVertical: 5,
+    color: '#6b7280',
+    marginLeft: 8,
+    fontSize: 14,
   },
-  applyButton: {
-    backgroundColor: '#004D61',
-    paddingVertical: 8,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  applyText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  footerNav: {
+  cardFooter: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    backgroundColor: 'white',
-    elevation: 5,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+  },
+  postedDate: {
+    color: '#6b7280',
+    fontSize: 12,
+  },
+  viewDetailsButton: {
+    backgroundColor: '#004d61',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  viewDetailsText: {
+    color: '#fff',
+    fontWeight: '500',
+    fontSize: 14,
   },
 });
-
-export default JobPostingScreen;
