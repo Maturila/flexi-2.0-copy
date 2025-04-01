@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -36,6 +36,10 @@ const jobDetails = {
   ],
   workingHours: '8-10 hours per day',
   experience: '1-2 years',
+  employerName: 'Quick Delivery Services',
+  employerContact: 'contact@quickdelivery.com',
+  employerEmail: 'info@quickdelivery.com',
+  employerWebsite: 'www.quickdelivery.com',
   education: 'High School Diploma',
   status: 'Active'
 };
@@ -117,20 +121,16 @@ export default function JobDetailsScreen() {
           <BulletList items={jobDetails.benefits} />
         </InfoSection>
 
-        <InfoSection title="Additional Information">
+        <InfoSection title="Employer Details">
           <View style={styles.additionalInfo}>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Experience:</Text>
-              <Text style={styles.infoValue}>{jobDetails.experience}</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Education:</Text>
-              <Text style={styles.infoValue}>{jobDetails.education}</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Posted on:</Text>
-              <Text style={styles.infoValue}>{jobDetails.postedDate}</Text>
-            </View>
+            <Text style={styles.infoValue}>{jobDetails.employerName}</Text>
+            <Text style={styles.infoValue}>{jobDetails.employerContact}</Text>
+            <Text style={styles.infoValue}>{jobDetails.employerEmail}</Text>
+            <Text style={styles.infoValue}>{jobDetails.employerWebsite}</Text>
+
+            <TouchableOpacity style={styles.viewProfileButton}>
+              <Text style={styles.viewProfileText}>View Profile</Text>
+            </TouchableOpacity>
           </View>
         </InfoSection>
       </View>
@@ -254,19 +254,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
   },
-  infoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  infoLabel: {
-    color: '#6b7280',
-    fontSize: 14,
-  },
   infoValue: {
     color: '#111827',
     fontSize: 14,
     fontWeight: '500',
+    marginBottom: 4,
   },
   applyButton: {
     backgroundColor: '#004d61',
@@ -278,6 +270,18 @@ const styles = StyleSheet.create({
   applyButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  viewProfileButton: {
+    backgroundColor: '#004d61',
+    padding: 8,
+    borderRadius: 4,
+    marginTop: 12,
+    alignItems: 'center',
+  },
+  viewProfileText: {
+    color: '#fff',
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
